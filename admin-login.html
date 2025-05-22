@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Admin - Yangoa</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { background: var(--cinza, #f8f9fb); }
+    .login-container {
+      max-width: 380px;
+      margin: 120px auto;
+      background: var(--branco, #fff);
+      border-radius: 14px;
+      box-shadow: 0 2px 16px rgba(10,35,66,0.10);
+      padding: 40px 32px 32px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .login-container h2 {
+      margin-bottom: 28px;
+      color: var(--azul, #0a2342);
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    .login-container input {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 18px;
+      border-radius: 8px;
+      border: 1px solid var(--cinza-medio, #e5e7eb);
+      font-size: 1rem;
+      background: var(--cinza, #f8f9fb);
+      color: var(--azul, #0a2342);
+    }
+    .login-container button {
+      width: 100%;
+      background: var(--azul, #0a2342);
+      color: var(--amarelo, #f7b801);
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .login-container button:hover {
+      background: var(--amarelo, #f7b801);
+      color: var(--azul, #0a2342);
+    }
+    .login-container .erro {
+      color: #c00;
+      margin-bottom: 10px;
+      font-size: 0.98rem;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Login Administrador</h2>
+    <div class="erro" id="erro-login">Usuário ou senha inválidos.</div>
+    <input type="text" id="usuario" placeholder="Usuário" autocomplete="username">
+    <input type="password" id="senha" placeholder="Senha" autocomplete="current-password">
+    <button id="btn-login">Entrar</button>
+  </div>
+  <script>
+    document.getElementById('btn-login').onclick = function() {
+      const usuario = document.getElementById('usuario').value.trim();
+      const senha = document.getElementById('senha').value.trim();
+      // Usuário e senha fixos para exemplo
+      if(usuario === 'admin' && senha === 'senha123') {
+        window.location.href = 'admin-edit.html';
+      } else {
+        document.getElementById('erro-login').style.display = 'block';
+      }
+    };
+    document.getElementById('senha').addEventListener('keydown', function(e) {
+      if(e.key === 'Enter') document.getElementById('btn-login').click();
+    });
+  </script>
+</body>
+</html> 

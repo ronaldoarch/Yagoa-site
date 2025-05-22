@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yangoa Company - Inteligência Comercial</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">Yangoa</div>
+      <ul>
+        <li><a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'})">Início</a></li>
+        <li><a href="#problemas">O que resolvemos</a></li>
+        <li><a href="#como-resolvemos">Como resolvemos</a></li>
+        <li><a href="#resultados">Resultados</a></li>
+        <li><a href="#depoimentos">Depoimentos</a></li>
+        <li><a href="#quem-somos">Quem somos</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+      <a href="admin-login.html" class="admin-btn">Área do Administrador</a>
+    </nav>
+  </header>
+  <main style="padding-top:80px;">
+  <!-- Hero Section -->
+  <section id="hero" class="hero">
+    <div class="container">
+      <h1 class="typing">Sua empresa está perdendo vendas todos os dias. E você nem percebe.</h1>
+      <p>Aplicamos inteligência comercial para corrigir o que está travando suas vendas: desorganização, lentidão no atendimento, falta de padrão, funil invisível.</p>
+      <a href="#contato" class="cta">Quero um diagnóstico da minha empresa</a>
+    </div>
+  </section>
+
+  <!-- O que a Yangoa resolve -->
+  <section id="problemas" class="problemas" data-animate>
+    <div class="container">
+      <h2>O que a Yangoa resolve?</h2>
+      <ul>
+        <li>Atendimento sem padrão e sem velocidade</li>
+        <li>Leads entrando todos os dias e sumindo sem resposta</li>
+        <li>Equipe perdida e desorganizada</li>
+        <li>Dono preso no WhatsApp</li>
+        <li>Nenhum controle sobre o funil de vendas</li>
+        <li>Faturamento oscilando e imprevisível</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Como resolvemos -->
+  <section id="como-resolvemos" class="como-resolvemos" data-animate>
+    <div class="container">
+      <h2>Como resolvemos?</h2>
+      <ol>
+        <li>Raio-X Comercial completo: identificamos onde os leads estão sendo perdidos e comportamentos que sabotam as vendas.</li>
+        <li>Plano de ação: padronização do atendimento, fluxo comercial ajustado, visão clara do funil e acompanhamento.</li>
+        <li>Execução ágil: tudo em até 5 dias úteis.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Resultados esperados -->
+  <section id="resultados" class="resultados" data-animate>
+    <div class="container">
+      <h2>Resultados esperados</h2>
+      <ul>
+        <li>Mais vendas com os mesmos leads</li>
+        <li>Menos ansiedade comercial</li>
+        <li>Equipe alinhada e autônoma</li>
+        <li>Tempo livre para o dono focar no que importa</li>
+        <li>Crescimento com previsão e controle</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Depoimentos / Casos reais -->
+  <section id="depoimentos" class="depoimentos" data-animate>
+    <div class="container">
+      <h2>Depoimentos / Casos reais</h2>
+      <div class="carrossel">
+        <!-- Slides de depoimentos serão inseridos via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Quem somos -->
+  <section id="quem-somos" class="quem-somos" data-animate>
+    <div class="container">
+      <h2>Quem somos</h2>
+      <p>Especialistas em inteligência comercial aplicada. Empresa cristã, com valores sólidos e foco total no cliente.</p>
+    </div>
+  </section>
+
+  <!-- CTA final -->
+  <section class="cta-final">
+    <div class="container">
+      <h2>Quer saber por que você está vendendo menos do que poderia?</h2>
+      <a href="#contato" class="cta">Fale com nosso time e receba seu Raio-X Comercial</a>
+    </div>
+  </section>
+
+  <!-- Contato (ancora para CTA) -->
+  <section id="contato" class="contato" data-animate>
+    <div class="container">
+      <h2>Entre em contato</h2>
+      <div class="form-progress" id="form-progress"></div>
+      <form>
+        <input type="text" placeholder="Seu nome" required>
+        <input type="email" placeholder="Seu e-mail" required>
+        <textarea placeholder="Como podemos ajudar?" required></textarea>
+        <button type="submit">Enviar</button>
+      </form>
+    </div>
+  </section>
+  </main>
+  <script src="scripts.js"></script>
+  <!-- Botão flutuante do Instagram -->
+  <a href="https://www.instagram.com/yangoa.company/" class="insta-float" target="_blank" aria-label="Instagram Yangoa">
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="18" cy="18" r="18" fill="#f7b801"/>
+      <g>
+        <path d="M24.5 12.5C24.5 13.3284 23.8284 14 23 14C22.1716 14 21.5 13.3284 21.5 12.5C21.5 11.6716 22.1716 11 23 11C23.8284 11 24.5 11.6716 24.5 12.5Z" fill="#0a2342"/>
+        <path d="M18 14.5C15.5147 14.5 13.5 16.5147 13.5 19C13.5 21.4853 15.5147 23.5 18 23.5C20.4853 23.5 22.5 21.4853 22.5 19C22.5 16.5147 20.4853 14.5 18 14.5ZM18 22C16.3431 22 15 20.6569 15 19C15 17.3431 16.3431 16 18 16C19.6569 16 21 17.3431 21 19C21 20.6569 19.6569 22 18 22Z" fill="#0a2342"/>
+        <path d="M25 9H11C9.89543 9 9 9.89543 9 11V25C9 26.1046 9.89543 27 11 27H25C26.1046 27 27 26.1046 27 25V11C27 9.89543 26.1046 9 25 9ZM25 25H11V11H25V25Z" fill="#0a2342"/>
+      </g>
+    </svg>
+  </a>
+</body>
+</html> 

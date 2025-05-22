@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edição do Site - Yangoa</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { background: var(--cinza, #f8f9fb); }
+    .edit-container {
+      max-width: 900px;
+      margin: 40px auto 40px auto;
+      background: var(--branco, #fff);
+      border-radius: 16px;
+      box-shadow: 0 2px 16px rgba(10,35,66,0.10);
+      padding: 40px 32px 32px 32px;
+    }
+    .edit-container h2 {
+      color: var(--azul, #0a2342);
+      margin-bottom: 18px;
+      font-size: 1.3rem;
+      border-bottom: 1px solid var(--cinza-medio, #e5e7eb);
+      padding-bottom: 8px;
+    }
+    .edit-group {
+      margin-bottom: 32px;
+    }
+    .edit-group label {
+      font-weight: bold;
+      color: var(--azul-claro, #1e3a5c);
+      display: block;
+      margin-bottom: 6px;
+    }
+    .edit-group textarea, .edit-group input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--cinza-medio, #e5e7eb);
+      font-size: 1rem;
+      background: var(--cinza, #f8f9fb);
+      color: var(--azul, #0a2342);
+      margin-bottom: 10px;
+      resize: vertical;
+    }
+    .edit-container button {
+      background: var(--amarelo, #f7b801);
+      color: var(--azul, #0a2342);
+      border: none;
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      margin-top: 10px;
+    }
+    .edit-container button:hover {
+      background: var(--azul, #0a2342);
+      color: var(--amarelo, #f7b801);
+    }
+    .edit-container .msg {
+      color: green;
+      margin-bottom: 18px;
+      display: none;
+    }
+    .logout {
+      float: right;
+      background: var(--azul, #0a2342);
+      color: var(--amarelo, #f7b801);
+      border: none;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: -10px;
+      margin-bottom: 18px;
+    }
+    .logout:hover {
+      background: var(--amarelo, #f7b801);
+      color: var(--azul, #0a2342);
+    }
+  </style>
+</head>
+<body>
+  <div class="edit-container">
+    <button class="logout" onclick="window.location.href='admin-login.html'">Sair</button>
+    <h1>Edição do Site</h1>
+    <div class="msg" id="msg-sucesso">Alterações salvas localmente!</div>
+    <form id="form-edicao">
+      <div class="edit-group">
+        <h2>Hero</h2>
+        <label for="hero-title">Título principal</label>
+        <input type="text" id="hero-title" required>
+        <label for="hero-sub">Subtítulo</label>
+        <input type="text" id="hero-sub" required>
+      </div>
+      <div class="edit-group">
+        <h2>O que a Yangoa resolve?</h2>
+        <label for="problemas">Problemas (um por linha)</label>
+        <textarea id="problemas" rows="5"></textarea>
+      </div>
+      <div class="edit-group">
+        <h2>Como resolvemos?</h2>
+        <label for="como">Passos (um por linha)</label>
+        <textarea id="como" rows="4"></textarea>
+      </div>
+      <div class="edit-group">
+        <h2>Resultados esperados</h2>
+        <label for="resultados">Resultados (um por linha)</label>
+        <textarea id="resultados" rows="4"></textarea>
+      </div>
+      <div class="edit-group">
+        <h2>Quem somos</h2>
+        <label for="quem">Descrição</label>
+        <textarea id="quem" rows="3"></textarea>
+      </div>
+      <div class="edit-group">
+        <h2>Depoimentos</h2>
+        <div id="depoimentos-list"></div>
+        <label>Tipo de depoimento:</label>
+        <select id="tipo-depoimento" onchange="atualizarTipoDepoimento()">
+          <option value="texto">Texto</option>
+          <option value="video-link">Vídeo (YouTube/Vimeo)</option>
+          <option value="video-arquivo">Vídeo (Arquivo)</option>
+        </select>
+        <div id="depoimento-texto-campos">
+          <textarea id="novo-depoimento-texto" rows="2" placeholder="Texto do depoimento"></textarea>
+        </div>
+        <div id="depoimento-video-link-campos" style="display:none">
+          <input type="text" id="novo-depoimento-video-link" placeholder="Link do vídeo (YouTube, Vimeo)">
+        </div>
+        <div id="depoimento-video-arquivo-campos" style="display:none">
+          <input type="file" id="novo-depoimento-video-arquivo" accept="video/*">
+        </div>
+        <input type="text" id="novo-depoimento-autor" placeholder="Autor">
+        <button type="button" onclick="adicionarDepoimento()">Adicionar Depoimento</button>
+      </div>
+      <button type="submit">Salvar alterações</button>
+    </form>
+  </div>
+  <script>
+    // Carregar dados salvos localmente
+    function carregarEdicao() {
+      const dados = JSON.parse(localStorage.getItem('yangoa-edicao') || '{}');
+      if(dados.heroTitle) document.getElementById('hero-title').value = dados.heroTitle;
+      if(dados.heroSub) document.getElementById('hero-sub').value = dados.heroSub;
+      if(dados.problemas) document.getElementById('problemas').value = dados.problemas.join('\n');
+      if(dados.como) document.getElementById('como').value = dados.como.join('\n');
+      if(dados.resultados) document.getElementById('resultados').value = dados.resultados.join('\n');
+      if(dados.quem) document.getElementById('quem').value = dados.quem;
+      if(dados.depoimentos) {
+        depoimentos = dados.depoimentos;
+        renderizarDepoimentos();
+      }
+    }
+    let depoimentos = [];
+    function renderizarDepoimentos() {
+      const lista = document.getElementById('depoimentos-list');
+      lista.innerHTML = '';
+      if(depoimentos.length === 0) {
+        lista.innerHTML = '<p style="color:#888">Nenhum depoimento cadastrado.</p>';
+        return;
+      }
+      depoimentos.forEach((dep, i) => {
+        const div = document.createElement('div');
+        div.style.marginBottom = '10px';
+        div.style.background = '#f8f9fb';
+        div.style.padding = '10px 12px';
+        div.style.borderRadius = '8px';
+        div.style.boxShadow = '0 1px 4px rgba(10,35,66,0.04)';
+        if(dep.tipo === 'texto') {
+          div.innerHTML = `<strong>${dep.autor}</strong>: <span>${dep.texto}</span> <button type='button' onclick='removerDepoimento(${i})' style='margin-left:10px;color:#c00;background:none;border:none;cursor:pointer;'>Remover</button>`;
+        } else if(dep.tipo === 'video-link') {
+          div.innerHTML = `<strong>${dep.autor}</strong>: <span>Vídeo: <a href='${dep.link}' target='_blank'>${dep.link}</a></span> <button type='button' onclick='removerDepoimento(${i})' style='margin-left:10px;color:#c00;background:none;border:none;cursor:pointer;'>Remover</button>`;
+        } else if(dep.tipo === 'video-arquivo') {
+          div.innerHTML = `<strong>${dep.autor}</strong>: <span>Vídeo enviado</span> <button type='button' onclick='removerDepoimento(${i})' style='margin-left:10px;color:#c00;background:none;border:none;cursor:pointer;'>Remover</button>`;
+        }
+        lista.appendChild(div);
+      });
+    }
+    function atualizarTipoDepoimento() {
+      const tipo = document.getElementById('tipo-depoimento').value;
+      document.getElementById('depoimento-texto-campos').style.display = tipo === 'texto' ? '' : 'none';
+      document.getElementById('depoimento-video-link-campos').style.display = tipo === 'video-link' ? '' : 'none';
+      document.getElementById('depoimento-video-arquivo-campos').style.display = tipo === 'video-arquivo' ? '' : 'none';
+    }
+    async function adicionarDepoimento() {
+      const tipo = document.getElementById('tipo-depoimento').value;
+      const autor = document.getElementById('novo-depoimento-autor').value.trim();
+      if(!autor) return alert('Preencha o autor do depoimento!');
+      if(tipo === 'texto') {
+        const texto = document.getElementById('novo-depoimento-texto').value.trim();
+        if(!texto) return alert('Preencha o texto do depoimento!');
+        depoimentos.push({ tipo, texto, autor });
+        document.getElementById('novo-depoimento-texto').value = '';
+      } else if(tipo === 'video-link') {
+        const link = document.getElementById('novo-depoimento-video-link').value.trim();
+        if(!link) return alert('Preencha o link do vídeo!');
+        depoimentos.push({ tipo, link, autor });
+        document.getElementById('novo-depoimento-video-link').value = '';
+      } else if(tipo === 'video-arquivo') {
+        const fileInput = document.getElementById('novo-depoimento-video-arquivo');
+        if(!fileInput.files[0]) return alert('Selecione um arquivo de vídeo!');
+        // Converter vídeo para base64 (atenção: arquivos grandes podem travar o navegador)
+        const file = fileInput.files[0];
+        const base64 = await toBase64(file);
+        depoimentos.push({ tipo, videoBase64: base64, autor });
+        fileInput.value = '';
+      }
+      document.getElementById('novo-depoimento-autor').value = '';
+      renderizarDepoimentos();
+    }
+    function toBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+        reader.readAsDataURL(file);
+      });
+    }
+    function removerDepoimento(idx) {
+      depoimentos.splice(idx, 1);
+      renderizarDepoimentos();
+    }
+    carregarEdicao();
+    document.getElementById('form-edicao').onsubmit = function(e) {
+      e.preventDefault();
+      const dados = {
+        heroTitle: document.getElementById('hero-title').value,
+        heroSub: document.getElementById('hero-sub').value,
+        problemas: document.getElementById('problemas').value.split('\n').filter(Boolean),
+        como: document.getElementById('como').value.split('\n').filter(Boolean),
+        resultados: document.getElementById('resultados').value.split('\n').filter(Boolean),
+        quem: document.getElementById('quem').value,
+        depoimentos: depoimentos
+      };
+      localStorage.setItem('yangoa-edicao', JSON.stringify(dados));
+      document.getElementById('msg-sucesso').style.display = 'block';
+      setTimeout(()=>{
+        document.getElementById('msg-sucesso').style.display = 'none';
+      }, 2000);
+    };
+  </script>
+</body>
+</html> 
